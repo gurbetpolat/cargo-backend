@@ -4,13 +4,14 @@ const allowedRoles = require("../../middlewares/allowedRoles");
 const { roles } = require("../../../config");
 const router = express.Router();
 
+//AraçOluşturma
 router.post(
   "/createVehicle",
   allowedRoles([roles.admin]),
   vehicleController.createVehicle
 );
 
-// get all vehicles
+//TümAraçlarıAlma
 router.get(
   "/getAllVehicles",
   allowedRoles([roles.admin]),
@@ -18,7 +19,7 @@ router.get(
 );
 
 
-// assign vehicle to personel
+//PersoneliAracaAtama
 router.post(
   "/assignVehicleToPersonel",
   allowedRoles([roles.admin]),

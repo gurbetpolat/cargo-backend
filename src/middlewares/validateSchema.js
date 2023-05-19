@@ -1,4 +1,6 @@
 module.exports = (schema) => async (req, res, next) => {
+ 
+ // Verilen şemayı doğrulama işlemi
   try {
     await schema.validate({
       body: req.body,
@@ -6,7 +8,9 @@ module.exports = (schema) => async (req, res, next) => {
       params: req.params,
     });
     return next();
-  } catch (err) {
+  } 
+  // Hata durumunda hatayı bir sonraki işleve aktarır
+  catch (err) {
     return next(err);
   }
 };

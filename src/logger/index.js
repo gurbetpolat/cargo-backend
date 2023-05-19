@@ -1,4 +1,5 @@
-// setup winston logger
+/* Log mesajlarını belirli bir formatta 
+düzenlemek için bir log formatı oluşturur */
 const winston = require("winston");
 const { createLogger, format, transports } = winston;
 const { combine, timestamp, printf } = format;

@@ -4,15 +4,18 @@ const allowedRoles = require("../../middlewares/allowedRoles");
 const { roles } = require("../../../config");
 const router = express.Router();
 
+//tüm personelleri getir
 router.get(
   "/getAllPersonels",
+  //izin verilen roller
   allowedRoles([roles.admin]),
   personelController.getAllPersonels
 );
-// add vehicle to personel
+//PersonelAracınıEkleme
 router.put(
   "/assignVehicleToPersonel",
   allowedRoles([roles.admin]),
+  //PersonelinAracaAtanması
   personelController.assignVehicleToPersonel
 );
 module.exports = router;
