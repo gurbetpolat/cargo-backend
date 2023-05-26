@@ -18,4 +18,12 @@ router.put(
   //PersonelinAracaAtanması
   personelController.assignVehicleToPersonel
 );
+
+// delete personel by id
+router.delete(
+  "/deletePersonel/:personelId",
+  allowedRoles([roles.admin]),
+  personelController.deletePersonel
+);
+
 module.exports = router;

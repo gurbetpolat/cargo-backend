@@ -18,6 +18,11 @@ router.get(
   vehicleController.getAllVehicles
 );
 
+router.get(
+  "/getAvailableVehicles",
+  allowedRoles([roles.admin, roles.branchPersonel]),
+  vehicleController.getAvailableVehicles
+);
 
 //PersoneliAracaAtama
 router.post(
@@ -25,4 +30,19 @@ router.post(
   allowedRoles([roles.admin]),
   vehicleController.assignVehicleToPersonel
 );
+
+//delete vehicle by id
+router.delete(
+  "/deleteVehicle/:vehicleId",
+  allowedRoles([roles.admin]),
+  vehicleController.deleteVehicle
+);
+
+//giveCargosToBranch
+router.post(
+  "/giveCargosToBranch",
+  allowedRoles([roles.transportPersonel]),
+  vehicleController.giveCargosToBranch
+);
+
 module.exports = router;

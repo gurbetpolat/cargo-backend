@@ -25,8 +25,8 @@ async function createCargo(req, res) {
     cargo.receiver = newReceiver._id;
   }
 
-  cargo.sender = sender._id;
-  cargo.receiver = receiver._id;
+  if (sender) cargo.sender = sender._id;
+  if (receiver) cargo.receiver = receiver._id;
 
   const createdCargo = await cargoService.create(cargo);
 
@@ -38,13 +38,28 @@ async function createCargo(req, res) {
     $addToSet: { waitingCargos: createdCargo._id },
   });
 
-  res.status(201).json(createdCargo);
+  res.status(201).json({
+    success: true,
+    data: createdCargo,
+  });
+}
+
+async function getAllCargos(req, res) {
+  const cargos = await cargoService.find();
+  res.status(200).json({
+    success: true,
+    data: cargos,
+  });
 }
 
 async function getMySendedCargos(req, res) {
   const userId = req.user._id;
   const cargos = await cargoService.find({ sender: userId });
-  res.status(200).json(cargos);
+  // send
+  res.status(200).json({
+    success: true,
+    data: cargos,
+  });
 }
 
 async function giveCargosToVehicle(req, res) {
@@ -72,7 +87,9 @@ async function giveCargosToVehicle(req, res) {
     });
   });
 
-  res.status(200).json({ updatedBranch, updatedVehicle, updatedCargos });
+  res.status(200).json({
+    success: true,
+  });
 }
 
 async function giveCargosToBranch(req, res) {
@@ -101,7 +118,6 @@ async function giveCargosToBranch(req, res) {
   });
 
   const updateCargoRequest = cargoService.updateMany(cargoIds, {
-    vehicle: null,
     status: "subede",
   });
 
@@ -126,7 +142,41 @@ async function giveCargoToCustomer(req, res) {
     wasDelivered: true,
   });
 
-  res.status(200).json({ cargo, branch });
+  res.status(200).json({
+    success: true,
+  });
+}
+
+async function getMyRecievedCargos(req, res) {
+  const userId = req.user._id;
+  const cargos = await cargoService.find({ receiver: userId });
+  // send
+  res.status(200).json({
+    success: true,
+    data: cargos,
+  });
+}
+
+async function getMyVehicleCargos(req, res) {
+  const vehicleId = req.user?.vehicle;
+  const cargos = await cargoService.find({ vehicle: vehicleId });
+  // send
+  res.status(200).json({
+    success: true,
+    data: cargos,
+  });
+}
+
+async function getMyVehicleCurrentCargos(req, res) {
+  const vehicleId = req.user?.vehicle;
+  const cargos = await cargoService.find({
+    vehicle: vehicleId,
+    status: "yolda",
+  });
+  res.status(200).json({
+    success: true,
+    data: cargos,
+  });
 }
 
 module.exports = {
@@ -135,4 +185,8 @@ module.exports = {
   giveCargosToVehicle,
   giveCargosToBranch,
   giveCargoToCustomer,
+  getAllCargos,
+  getMyRecievedCargos,
+  getMyVehicleCargos,
+  getMyVehicleCurrentCargos,
 };

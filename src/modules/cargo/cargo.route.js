@@ -12,7 +12,14 @@ router.post(
   cargoController.createCargo
 );
 
-// GönderilenTümKargolarıAl
+//get all cargos
+router.get(
+  "/getAllCargos",
+  allowedRoles([roles.admin]),
+  cargoController.getAllCargos
+);
+
+// getAllSendedCargos
 router.get(
   "/getMySendedCargos",
   //İzinRolüOlarakSadeceMüşteriler
@@ -43,5 +50,22 @@ router.post(
   allowedRoles([roles.branchPersonel]),
   cargoController.giveCargoToCustomer
 );
+router.get(
+  "/getMyRecievedCargos",
+  allowedRoles([roles.customer]),
+  cargoController.getMyRecievedCargos
+);
+router.get(
+  "/getMyVehicleCargos",
+  allowedRoles([roles.transportPersonel]),
+  cargoController.getMyVehicleCargos
+);
+
+router.get(
+  "/getMyVehicleCurrentCargos",
+  allowedRoles([roles.transportPersonel]),
+  cargoController.getMyVehicleCurrentCargos
+);
+
 
 module.exports = router;

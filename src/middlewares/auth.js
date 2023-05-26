@@ -16,7 +16,7 @@ module.exports = async function (req, res, next) {
   // Verilen tokeni doğrular ve kullanıcı bilgilerini `req.user` olarak atar
   try {
     const decoded = jwt.verify(token, config.jwtSecret);
-    if (!decoded) throw new AppError("Unauthorized", 401)
+    if (!decoded) throw new AppError("Unauthorized", 401);
     req.user = decoded;
     next();
   } catch (error) {

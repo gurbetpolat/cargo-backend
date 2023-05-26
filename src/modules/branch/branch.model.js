@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const Schema = mongoose.Schema;
 
 const BranchSchema = new Schema({
@@ -19,12 +20,6 @@ const BranchSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Personel",
-      validate: {
-        validator: async function (v) {
-          const personel = await personelModel.findById(v);
-          return personel && personel.role === "branchPersonel";
-        },
-      },
     },
   ],
   cargos: [
