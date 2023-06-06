@@ -1,9 +1,6 @@
-
 const logger = require("../logger");
 
-// Hata yönetimi middleware fonksiyonu
-// Hatalar yakalamamızı sağlayan ara katman
-
+// eslint-disable-next-line no-unused-vars
 module.exports = (err, req, res, next) => {
   const status = err?.status || 500;
   logger.error(err);
